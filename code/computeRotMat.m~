@@ -1,0 +1,25 @@
+% 16-741 Mechanics of Manipulation, Fall 2015
+% Author: Sung Kyun Kim (kimsk@cs.cmu.edu)
+%
+% n: inward-pointing direction of a contact normal [nx; ny; nz]; 3x1 vector
+% R: a rotation matrix with positive x-axis aligned with n; 3x3 matrix
+%
+% NOTE: As only one direction vector is specified, there is one redundant degree of freedom in the determination of R
+
+function [R] = computeRotMat(n)
+
+% write your code here
+x = [1, 0, 0]';
+y = [0, 1, 0]';
+z = [0, 0, 1]';
+a = x;
+b = n / norm(n);
+v = cross(x,b);
+s = norm(v);
+c = dot(x,n);
+I = eye(3);
+xprod = @(p) [0 -p(3) p(2); p(3) 0 -p(1); -p(2) p(1) 0];
+
+R = I + xprod(v) + xprod(v).^2 * ( (1-c) / s^2 );
+
+%R = cos(th)*I + sin(th)*xprod(n) + (1-cos(th))*(n'*n);
