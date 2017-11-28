@@ -12,14 +12,24 @@ function [R] = computeRotMat(n)
 x = [1, 0, 0]';
 y = [0, 1, 0]';
 z = [0, 0, 1]';
+
 a = x;
-b = n / norm(n);
-v = cross(x,b);
-s = norm(v);
-c = dot(x,n);
+b = n;
 I = eye(3);
-xprod = @(p) [0 -p(3) p(2); p(3) 0 -p(1); -p(2) p(1) 0];
 
-R = I + xprod(v) + xprod(v).^2 * ( (1-c) / s^2 );
+% thx = acos( dot(x,n) / (norm(x) * norm(n)) );
+% thy = acos( dot(y,n) / (norm(y) * norm(n)) );
+% thz = acos( dot(z,n) / (norm(z) * norm(n)) );
 
-%R = cos(th)*I + sin(th)*xprod(n) + (1-cos(th))*(n'*n);
+syms thx thy thz;
+
+Rx = [1 0 0; 0 cos(thx) -sin(thx); 0 sin(thx) cos(thx)];
+Ry = [cos(thy) 0 sin(thy); 0 1 0; -sin(thy) 0 cos(thy)];
+Rz = [cos(thz) -sin(thz) 0; sin(thz) cos(thz) 0; 0 0 1];
+
+R = Rz*Ry*Rx;
+
+eqn = R*n == x;
+
+
+

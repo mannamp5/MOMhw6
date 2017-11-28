@@ -38,7 +38,7 @@ else
     % if min < 1 --> F.C.
     % else not F.C.
     [y, zmax] = linprog(-Wc, Wnew', ones(N,1));
-    if (dot(-Wc'*y < 1))
+    if ((-Wc'*y < 1))
         bFC = 1;
     else
         bFC = 0;

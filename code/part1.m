@@ -39,8 +39,8 @@ switch (TEST)	% index for test sets
 		CN = [n1 n2 n3 n4];
 		
 		% friction coefficient (try both of values)
-% 		mu = 0.3;
-		mu = 0.5;
+ 		mu = 0.3;
+%		mu = 0.5;
 		
 		% the number of side facets of a linearized polyhedral friction cone
 		M = 100;
@@ -109,23 +109,23 @@ drawContactScrew(CP, W);
 
 
 %% Q3 Frictional point contact
-% 
-% % friction cone approximation
-% [CPF, CNF] = frictionCone(CP, CN, mu, M);
-% 
-% % normalized screw coordinates of contact normals
-% [WF] = contactScrew(CPF, CNF);
-% 
-% % draw contact screw
-% figure;
-% drawContactScrew(CPF, WF, M);
-% 
-% % force closure test (1: true, 0: false)
-% [bFCF, zmaxF] = isForceClosure(WF);
+
+% friction cone approximation
+[CPF, CNF] = frictionCone(CP, CN, mu, M);
+
+% normalized screw coordinates of contact normals
+[WF] = contactScrew(CPF, CNF);
+
+% draw contact screw
+figure;
+drawContactScrew(CPF, WF, M);
+
+% force closure test (1: true, 0: false)
+[bFCF, zmaxF] = isForceClosure(WF);
 
 
 % print out results
 bFC
 zmax
-% bFCF
-% zmaxF
+bFCF
+zmaxF
