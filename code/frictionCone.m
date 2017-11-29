@@ -22,6 +22,10 @@ function [CPF, CNF] = frictionCone(CP, CN, mu, M)
 % write your code here
 N = size(CP,2);
 R = zeros(3,3,N);
+% R(:,:,1) = [-1 0 0; 0 0 1; 0 1 0];
+% R(:,:,2) = [0 1 0; -1 0 0; 0 0 1];
+% R(:,:,3) = [0 0 1; 0 1 0; -1 0 0];
+% R(:,:,4) = [0 0 1; 1 0 0; 0 1 0]; 
 d = zeros(3,M);
 CNF = zeros(3,N*M);
 CPF = zeros(3,N*M);
@@ -29,8 +33,8 @@ for i=1:N
     R(:,:,i) = computeRotMat(CN(:,i));
     for j=1:M
     d(:,j) = [ 1 mu*cos( (2*j*pi)/M ) mu*sin( (2*j*pi)/M )]' ;
-    CNF(1:3, M*(i-1)+j) = R(:,:,i) * d(:,j);
-    CPF(1:3, M*(i-1)+j) = CP(:,i);
+    CNF(:, M*(i-1)+j) = R(:,:,i) * d(:,j);
+    CPF(:, M*(i-1)+j) = CP(:,i);
     end
 end
 

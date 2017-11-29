@@ -1,0 +1,344 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>part1</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-11-29"><meta name="DC.source" content="part1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Given contact normals and parameters</a></li><li><a href="#4">Q1/Q2 Frictionless point contact</a></li><li><a href="#5">Q3 Frictional point contact</a></li></ul></div><pre class="codeinput"><span class="comment">% 16-741 Mechanics of Manipulation, Fall 2017</span>
+<span class="comment">% Author: Sung Kyun Kim (kimsk@cs.cmu.edu)</span>
+<span class="comment">%</span>
+<span class="comment">% Execution script to test your code for Part 1</span>
+<span class="comment">% Change the value of TEST to run different test sets</span>
+<span class="comment">%</span>
+<span class="comment">% TEST: an index for test cases (0: an example in reference [1] and [2], 1~2: test cases for grading); scalar</span>
+<span class="comment">%</span>
+<span class="comment">% Examples:</span>
+<span class="comment">% part1();</span>
+<span class="comment">% part1(1);</span>
+
+<span class="keyword">function</span> part1(TEST)
+</pre><pre class="codeinput"><span class="comment">% check input arguments</span>
+<span class="keyword">if</span> nargin ~= 1
+	TEST = 0;
+<span class="keyword">end</span>
+</pre><h2>Given contact normals and parameters<a name="3"></a></h2><pre class="codeinput"><span class="keyword">switch</span> (TEST)	<span class="comment">% index for test sets</span>
+	<span class="keyword">case</span> 0		<span class="comment">% example in reference [1] and [2]; not for grading</span>
+		<span class="comment">% contact point position</span>
+		p1 = [2; 0; 0];
+		p2 = [0; 1.5; 0];
+		p3 = [0; 0; 2];
+		p4 = [1.2; -2; 0];
+
+		CP = [p1 p2 p3 p4];
+
+		<span class="comment">% inward-pointing contact normal direction</span>
+		n1 = [-1; 0; 0];
+		n2 = [0; -1; 0];
+		n3 = [0; 0; -1];
+		n4 = [0; 1; 0];
+
+		CN = [n1 n2 n3 n4];
+
+		<span class="comment">% friction coefficient (try both of values)</span>
+ 		mu = 0.3;
+<span class="comment">%		mu = 0.5;</span>
+
+		<span class="comment">% the number of side facets of a linearized polyhedral friction cone</span>
+		M = 100;
+
+	<span class="keyword">case</span> 1		<span class="comment">% test case 1 for grading</span>
+		<span class="comment">% contact point position</span>
+		p1 = [1; 1; 1];
+		p2 = [-1; 1; 0];
+		p3 = [0; -2; -1];
+
+		CP = [p1 p2 p3];
+
+		<span class="comment">% inward-pointing contact normal direction</span>
+		n1 = [-1; -1; -1];
+		n2 = [1; -1; 0];
+		n3 = [0; 2; 1];
+
+		CN = [n1 n2 n3];
+
+		<span class="comment">% friction coefficient</span>
+		mu = 0.5;
+
+		<span class="comment">% the number of side facets of a linearized polyhedral friction cone</span>
+		M = 100;
+
+	<span class="keyword">case</span> 2		<span class="comment">% test case 2 for grading</span>
+		<span class="comment">% contact point</span>
+		p1 = [-0.81; 1.26; 1.23];
+		p2 = [-1.75; -1.37; 0.74];
+		p3 = [1.49; 0.85; -1.39];
+		p4 = [0.49; -2.57; -0.39];
+		p5 = [1.23; -1.04; 1.20];
+
+		CP = [p1 p2 p3 p4 p5];
+
+		<span class="comment">% relative rotation matrix (first column in R, i.e., x-axis of local frame, is the pushing direction)</span>
+		n1 = [0; -1; 0];
+		n2 = [1; 0; 0];
+		n3 = [0; -1; 0];
+		n4 = [0; 1; 0];
+		n5 = [0; 0; -1];
+
+		CN = [n1 n2 n3 n4 n5];
+
+
+		<span class="comment">% friction coefficient</span>
+		mu = 0.2;
+
+		<span class="comment">% the number of side facets of a linearized polyhedral friction cone</span>
+		M = 100;
+
+<span class="keyword">end</span>
+</pre><h2>Q1/Q2 Frictionless point contact<a name="4"></a></h2><pre class="codeinput"><span class="comment">% normalized screw coordinates of contact normals</span>
+[W] = contactScrew(CP, CN);
+
+<span class="comment">% draw contact screws</span>
+figure;
+drawContactScrew(CP, W);
+
+<span class="comment">% force closure test (1: true, 0: false)</span>
+[bFC, zmax] = isForceClosure(W);
+</pre><pre class="codeoutput">rank &lt; 6
+</pre><img vspace="5" hspace="5" src="part1_01.png" alt=""> <h2>Q3 Frictional point contact<a name="5"></a></h2><pre class="codeinput"><span class="comment">% friction cone approximation</span>
+[CPF, CNF] = frictionCone(CP, CN, mu, M);
+
+<span class="comment">% normalized screw coordinates of contact normals</span>
+[WF] = contactScrew(CPF, CNF);
+
+<span class="comment">% draw contact screw</span>
+figure;
+drawContactScrew(CPF, WF, M);
+
+<span class="comment">% force closure test (1: true, 0: false)</span>
+[bFCF, zmaxF] = isForceClosure(WF);
+
+
+<span class="comment">% print out results</span>
+bFC
+zmax
+bFCF
+zmaxF
+</pre><pre class="codeoutput">Optimization terminated.
+
+bFC =
+
+     0
+
+
+zmax =
+
+     0
+
+
+bFCF =
+
+     1
+
+
+zmaxF =
+
+   -1.4809
+
+</pre><img vspace="5" hspace="5" src="part1_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% 16-741 Mechanics of Manipulation, Fall 2017
+% Author: Sung Kyun Kim (kimsk@cs.cmu.edu)
+%
+% Execution script to test your code for Part 1
+% Change the value of TEST to run different test sets
+%
+% TEST: an index for test cases (0: an example in reference [1] and [2], 1~2: test cases for grading); scalar
+%
+% Examples:
+% part1();
+% part1(1);
+
+function part1(TEST)
+
+% check input arguments
+if nargin ~= 1
+	TEST = 0;
+end
+
+
+%% Given contact normals and parameters
+
+switch (TEST)	% index for test sets
+	case 0		% example in reference [1] and [2]; not for grading
+		% contact point position
+		p1 = [2; 0; 0];
+		p2 = [0; 1.5; 0];
+		p3 = [0; 0; 2];
+		p4 = [1.2; -2; 0];
+		
+		CP = [p1 p2 p3 p4];
+		
+		% inward-pointing contact normal direction
+		n1 = [-1; 0; 0];
+		n2 = [0; -1; 0];
+		n3 = [0; 0; -1];
+		n4 = [0; 1; 0];
+		
+		CN = [n1 n2 n3 n4];
+		
+		% friction coefficient (try both of values)
+ 		mu = 0.3;
+%		mu = 0.5;
+		
+		% the number of side facets of a linearized polyhedral friction cone
+		M = 100;
+		
+	case 1		% test case 1 for grading
+		% contact point position
+		p1 = [1; 1; 1];
+		p2 = [-1; 1; 0];
+		p3 = [0; -2; -1];
+		
+		CP = [p1 p2 p3];
+		
+		% inward-pointing contact normal direction
+		n1 = [-1; -1; -1];
+		n2 = [1; -1; 0];
+		n3 = [0; 2; 1];
+		
+		CN = [n1 n2 n3];
+		
+		% friction coefficient
+		mu = 0.5;
+		
+		% the number of side facets of a linearized polyhedral friction cone
+		M = 100;
+		
+	case 2		% test case 2 for grading
+		% contact point
+		p1 = [-0.81; 1.26; 1.23];
+		p2 = [-1.75; -1.37; 0.74];
+		p3 = [1.49; 0.85; -1.39];
+		p4 = [0.49; -2.57; -0.39];
+		p5 = [1.23; -1.04; 1.20];
+		
+		CP = [p1 p2 p3 p4 p5];
+
+		% relative rotation matrix (first column in R, i.e., x-axis of local frame, is the pushing direction)
+		n1 = [0; -1; 0];
+		n2 = [1; 0; 0];
+		n3 = [0; -1; 0];
+		n4 = [0; 1; 0];
+		n5 = [0; 0; -1];
+
+		CN = [n1 n2 n3 n4 n5];
+
+		
+		% friction coefficient
+		mu = 0.2;
+		
+		% the number of side facets of a linearized polyhedral friction cone
+		M = 100;
+		
+end
+
+
+%% Q1/Q2 Frictionless point contact
+
+% normalized screw coordinates of contact normals
+[W] = contactScrew(CP, CN);
+
+% draw contact screws
+figure;
+drawContactScrew(CP, W);
+
+% force closure test (1: true, 0: false)
+[bFC, zmax] = isForceClosure(W);
+
+
+%% Q3 Frictional point contact
+
+% friction cone approximation
+[CPF, CNF] = frictionCone(CP, CN, mu, M);
+
+% normalized screw coordinates of contact normals
+[WF] = contactScrew(CPF, CNF);
+
+% draw contact screw
+figure;
+drawContactScrew(CPF, WF, M);
+
+% force closure test (1: true, 0: false)
+[bFCF, zmaxF] = isForceClosure(WF);
+
+
+% print out results
+bFC
+zmax
+bFCF
+zmaxF
+
+##### SOURCE END #####
+--></body></html>

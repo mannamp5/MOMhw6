@@ -41,7 +41,7 @@ for i = 1:N
 
 	% draw contact normals (the point of action at the end of arrow)
 	quiver3(CPi(1,:),CPi(2,:),CPi(3,:), Wi(1,:),Wi(2,:),Wi(3,:), 'autoscale','off','linewidth',2,'color',coli);		% force applied at contact point
-	quiver3(O,O,O, Wi(4,:),Wi(5,:),Wi(6,:), 'autoscale','off','linewidth',2,'color',coli);							% moments about the origin
+	%quiver3(O,O,O, Wi(4,:),Wi(5,:),Wi(6,:), 'autoscale','off','linewidth',2,'color',coli);							% moments about the origin
 end
 title('Contact normals in 3D space');
 xlabel('x');

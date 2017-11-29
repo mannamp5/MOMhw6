@@ -9,27 +9,34 @@
 function [R] = computeRotMat(n)
 
 % write your code here
-x = [1, 0, 0]';
-y = [0, 1, 0]';
-z = [0, 0, 1]';
+% X = [1, 0, 0]';
+% Y = [0, 1, 0]';
+% Z = [0, 0, 1]';
+% %n = n / norm(n);
+% 
+% x = n(1);
+% y = n(2); 
+% z = n(3);
+% 
+% xyLength = sqrt(x * x + y * y);
+% zAngle = acos(y / xyLength);
+% vecLength = sqrt(x * x + y * y + z * z);
+% xAngle = acos(xyLength / vecLength);
+%  
+% Rx = @(th) [1 0 0; ...
+%             0 cos(th) -sin(th); ...
+%             0 sin(th) cos(th)]; 
+%         
+% Ry = @(th) [cos(th) 0 sin(th); ... 
+%             0 1 0; ...
+%             -sin(th) 0 cos(th)]; 
+%         
+% Rz = @(th) [cos(th) -sin(th) 0; ...
+%             sin(th) cos(th) 0; ...
+%             0 0 1]; 
+% 
+% R = Rz(zAngle)*Rx(xAngle);
 
-a = x;
-b = n;
-I = eye(3);
+xx = 
 
-% thx = acos( dot(x,n) / (norm(x) * norm(n)) );
-% thy = acos( dot(y,n) / (norm(y) * norm(n)) );
-% thz = acos( dot(z,n) / (norm(z) * norm(n)) );
-
-syms thx thy thz;
-
-Rx = [1 0 0; 0 cos(thx) -sin(thx); 0 sin(thx) cos(thx)];
-Ry = [cos(thy) 0 sin(thy); 0 1 0; -sin(thy) 0 cos(thy)];
-Rz = [cos(thz) -sin(thz) 0; sin(thz) cos(thz) 0; 0 0 1];
-
-R = Rz*Ry*Rx;
-
-eqn = R*n == x;
-
-
-
+end
