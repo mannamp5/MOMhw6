@@ -14,6 +14,7 @@ if (rank(W) < 6)
     bFC = false;
     zmax = 0;
     disp('rank < 6');
+    return;
 else
     % find an internal point such as centroid
     P = zeros(6,1);
@@ -24,11 +25,9 @@ else
     Wc = P;
     % subtract centroid from all wrenches
     Wnew = W-repmat(Wc,1,N);
-    % min -wc' y s.t. (w-wc)' y <= 1 
-    % if min < 1 --> F.C.
-    % else not F.C.
-    [y, zmax] = linprog(-Wc, Wnew', ones(N,1));
-    if (((-Wc)'*y < 1))
+    %[y, zmax] = linprog(-Wc, Wnew', ones(N,1));
+    [~, zmax] = linprog(P, Wnew', ones(N,1));
+    if ((-zmax) < 1)
         bFC = 1;
     else
         bFC = 0;

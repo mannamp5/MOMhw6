@@ -14,34 +14,20 @@ if (rank(W) < 6)
     bFC = false;
     zmax = 0;
     disp('rank < 6');
+    return;
 else
     % find an internal point such as centroid
     P = zeros(6,1);
-    %P = zeros(3,1);
     for i=1:N
-        %P = P + W(:,i);
-        P = P + W(1:3,i);
+        P = P + W(:,i);
     end
     P = P/N; % internal point
-% %     Q = W(1:3,N); % boundary point
-% %     % distance PO and PQ and compare to see if inside polygon
-% %     PO = sqrt(P(1)^2 + P(2)^2 + P(3)^2);
-% %     PQ = sqrt((P(1)-Q(1))^2 + (P(2)-Q(2))^2 + (P(3)-Q(3))^2);
-% %     if (PO >= PQ) 
-% %         bFC = false;
-% %         zmax = 0;
-% %         disp('ray shooting failed');
-% %         return;
-% %     end
-    Wc = P
-    %Wc = [P; zeros(3,1)];
+    Wc = P;
     % subtract centroid from all wrenches
     Wnew = W-repmat(Wc,1,N);
-    % min -wc' y s.t. (w-wc)' y <= 1 
-    % if min < 1 --> F.C.
-    % else not F.C.
-    [y, zmax] = linprog(-Wc, Wnew', ones(N,1));
-    if (((-Wc)'*y < 1))
+    %[y, zmax] = linprog(-Wc, Wnew', ones(N,1));
+    [~, zmax] = linprog(
+    if ((Wc'*y < 1))
         bFC = 1;
     else
         bFC = 0;

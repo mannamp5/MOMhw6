@@ -39,8 +39,8 @@ switch (TEST)	% index for test sets
 		CN = [n1 n2 n3 n4];
 		
 		% friction coefficient (try both of values)
- 		mu = 0.3;
-%		mu = 0.5;
+% 		mu = 0.3;
+		mu = 0.5;
 		
 		% the number of side facets of a linearized polyhedral friction cone
 		M = 100;
