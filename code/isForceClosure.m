@@ -25,9 +25,9 @@ else
     Wc = P;
     % subtract centroid from all wrenches
     Wnew = W-repmat(Wc,1,N);
-    %[y, zmax] = linprog(-Wc, Wnew', ones(N,1));
     [~, zmax] = linprog(P, Wnew', ones(N,1));
-    if ((-zmax) < 1)
+    zmax = -zmax;
+    if ((zmax) < 1)
         bFC = 1;
     else
         bFC = 0;

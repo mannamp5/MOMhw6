@@ -16,7 +16,7 @@ function part1(TEST)
 if nargin ~= 1
 	TEST = 0;
 end
-close all;
+
 
 %% Given contact normals and parameters
 
@@ -96,16 +96,16 @@ end
 
 
 %% Q1/Q2 Frictionless point contact
-% 
-% % normalized screw coordinates of contact normals
-% [W] = contactScrew(CP, CN);
-% 
-% % draw contact screws
-% figure;
-% drawContactScrew(CP, W);
-% 
-% % force closure test (1: true, 0: false)
-% [bFC, zmax] = isForceClosure(W);
+
+% normalized screw coordinates of contact normals
+[W] = contactScrew(CP, CN);
+
+% draw contact screws
+figure;
+drawContactScrew(CP, W);
+
+% force closure test (1: true, 0: false)
+[bFC, zmax] = isForceClosure(W);
 
 
 %% Q3 Frictional point contact
@@ -125,7 +125,7 @@ drawContactScrew(CPF, WF, M);
 
 
 % print out results
-% bFC
-% zmax
+bFC
+zmax
 bFCF
 zmaxF
